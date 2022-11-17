@@ -3,7 +3,6 @@ package test
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -59,7 +58,7 @@ func TestCreate(t *testing.T) {
 
 func TestUpdate(t *testing.T) {
 	r := SetupRouter()
-	r.PUT("/books:id", bookController.Update)
+	r.PUT("/books/:id", bookController.Update)
 
 	id := "5"
 	userRequest := request.BookUpdateRequest{
@@ -70,8 +69,6 @@ func TestUpdate(t *testing.T) {
 	req, _ := http.NewRequest(http.MethodPut, "/books/"+id, bytes.NewBuffer(testBody))
 
 	w := httptest.NewRecorder()
-	fmt.Println(w.Code, http.StatusOK)
-	fmt.Println(w.Code == http.StatusOK)
 	r.ServeHTTP(w, req)
 	assert.Equal(t, http.StatusOK, w.Code)
 }
