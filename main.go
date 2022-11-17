@@ -4,12 +4,14 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/giriaditya/test-gin/app"
 	"github.com/giriaditya/test-gin/controllers"
+	"github.com/giriaditya/test-gin/repository"
 	"github.com/giriaditya/test-gin/service"
 )
 
 func main() {
 	db := app.ConnectDatabase()
-	bookService := service.NewBookService(db)
+	booksRepository := repository.NewBookRepository()
+	bookService := service.NewBookService(db, booksRepository)
 	bookController := controllers.NewBookController(bookService)
 
 	// Init Gin
