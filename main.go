@@ -18,7 +18,7 @@ func main() {
 	r := gin.Default()
 
 	r.POST("/books", bookController.Create)
-	r.PATCH("/books/:id", bookController.Update)
+	r.PUT("/books/:id", bookController.Update)
 	r.DELETE("/books/:id", bookController.Delete)
 	r.GET("/books/", bookController.FetchAll)
 	r.Run(":80")

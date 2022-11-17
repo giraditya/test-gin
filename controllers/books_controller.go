@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -46,22 +47,25 @@ func (controller *BookControllerImplementation) Create(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"data": response})
+	c.JSON(http.StatusCreated, gin.H{"data": response})
 }
 
 func (controller *BookControllerImplementation) Update(c *gin.Context) {
 	var request request.BookUpdateRequest
 	if err := c.ShouldBindJSON(&request); err != nil {
+		fmt.Println(err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
+		fmt.Println(err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 	response, err := controller.BookService.Update(c.Request.Context(), request, id)
 	if err != nil {
+		fmt.Println(err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}

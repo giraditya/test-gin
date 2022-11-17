@@ -77,7 +77,7 @@ func (repository *BookRepositoryImplementation) Update(ctx context.Context, db *
 
 func (repository *BookRepositoryImplementation) Delete(ctx context.Context, db *gorm.DB, id int) error {
 	book := Book{}
-	db.Model(&book).Delete(book, id)
+	db.Delete(&book, id)
 	if err := db.Error; err != nil {
 		return err
 	}
